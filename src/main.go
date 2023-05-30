@@ -6,11 +6,15 @@ import (
 	"strings"
 )
 
+const Version = "20230529"
+
 var Args struct {
 	help bool
+	version bool
 }
 
 func main() {
+	flag.BoolVar(&Args.version, "version", false, "show the executable version")
 	flag.BoolVar(&Args.help, "help", false, "display usage information")
 
 	flag.Usage = func() {
@@ -26,6 +30,11 @@ func main() {
 
 	if Args.help {
 		flag.Usage()
+		return
+	}
+
+	if Args.version {
+		fmt.Println(Version)
 		return
 	}
 

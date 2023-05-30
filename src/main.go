@@ -1,11 +1,34 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"strings"
 )
 
+var Args struct {
+	help bool
+}
+
 func main() {
+	flag.BoolVar(&Args.help, "help", false, "display usage information")
+
+	flag.Usage = func() {
+		fmt.Println("Usage: golings [-v] [<command>] [<args>]")
+		fmt.Println("\nGolings is a collection of small exercises to get you used to writing and")
+		fmt.Println("reading Go Code")
+		fmt.Println("\nOptions:")
+		fmt.Println(strings.Join(flag.Args(), "\n"))
+		flag.PrintDefaults()
+	}
+
+	flag.Parse()
+
+	if Args.help {
+		flag.Usage()
+		return
+	}
+
 	fmt.Println(
 		strings.Join(
 			[]string {
